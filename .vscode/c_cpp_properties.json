@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "msp430",
+            "includePath": [
+                "${workspaceFolder}/driverlib",
+                "/Users/maoyachen/.local/opt/msp430-gcc/msp430-elf/include",
+                "/Users/maoyachen/.local/opt/msp430-gcc/include"
+            ],
+            "defines": [
+                "__MSP430FR5969__"
+            ],
+            "compilerArgs": [
+                "-nostdinc++"
+            ]
+        }
+    ],
+    "version": 4
+}
