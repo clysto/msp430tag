@@ -9,6 +9,17 @@
         "hw_memmap.h": "c",
         "random": "c",
         "eusci_b_spi.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "atomic": "c",
+        "charconv": "c",
+        "cstdint": "c",
+        "*.tcc": "c",
+        "chrono": "c",
+        "stop_token": "c",
+        "*.inc": "c",
+        "uart.h": "c",
+        "fifo.h": "c",
+        "led.h": "c",
+        "cstddef": "c"
     }
 }
