@@ -26,20 +26,33 @@ int main(void) {
     UART_init();
     LED_turnOnLED1();
 
+    // Disable FRAM wait cycles to allow clock operation over 8MHz
+    FRAMCtl_configureWaitStateControl(FRAMCTL_ACCESS_TIME_CYCLES_1);
+    // 配置 DCO 为 16 MHz
+    CS_setDCOFreq(CS_DCORSEL_1, CS_DCOFSEL_4);
+
     CS_setExternalClockSource(0, 16000000);
     CS_turnOnHFXT(CS_HFXT_DRIVE_16MHZ_24MHZ);
     // SMCLK = HFXTCLK / 2 = 8MHz
     CS_initClockSignal(CS_SMCLK, CS_HFXTCLK_SELECT, CS_CLOCK_DIVIDER_2);
+    // MCLK 时钟源配置为 DCO
     CS_initClockSignal(CS_MCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1);
     // baud rate: 1Mbps
     BS_init(BS_SMCLK, 1000000);
 
     uint8_t data[32];
 
+    for (int i = 0; i < sizeof(data); i++) {
+        data[i] = i;
+    }
+
+    int i = 0;
     for (;;) {
-        UART_transaction(data, sizeof(data));
-        // read data from uart
-        BS_transmitData(data, 32);
+        if (i++ > 20) {
+            LED_toggleLED2();
+            i = 0;
+        }
+        BS_transmitFrame(data, 32);
         __delay_cycles(8000);
     }
 

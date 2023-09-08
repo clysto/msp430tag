@@ -27,4 +27,6 @@ void BS_init(uint8_t clockSource, uint32_t desiredClock);
  */
 void BS_transmitData(uint8_t const* data, size_t size);
 
+void BS_transmitFrame(uint8_t const* data, size_t size);
+
 #endif

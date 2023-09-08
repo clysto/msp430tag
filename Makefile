@@ -6,13 +6,13 @@ OBJECTS   = $(patsubst src/%.c,build/%.o,$(SOURCES)) \
 SUPPORT_FILE_DIR = $(MSP430GCC)/include
 
 DEVICE  = MSP430FR5969
-CC      = $(MSP430GCC)/bin/msp430-elf-gcc
-OBJCOPY = $(MSP430GCC)/bin/msp430-elf-objcopy
+CC      = msp430-elf-gcc
+OBJCOPY = msp430-elf-objcopy
 FLASHER = $(MSPFLASHER)/MSP430Flasher
 MAKETXT = srec_cat
 
 CFLAGS  = -I $(SUPPORT_FILE_DIR) -D__$(DEVICE)__ -I driverlib -mmcu=$(DEVICE) -O0 -Wall -g
-LDFLAGS = -L $(SUPPORT_FILE_DIR) -T $(shell echo $(DEVICE) | tr A-Z a-z).ld -Wl,-Map,$(BUILD_DIR)/$(DEVICE).map,--gc-sections 
+LDFLAGS = -L $(SUPPORT_FILE_DIR) -T $(shell echo $(DEVICE) | tr A-Z a-z).ld -Wl,-Map,$(BUILD_DIR)/$(DEVICE).map,--gc-sections
 
 .PHONY: clean all upload debug
 
@@ -20,7 +20,7 @@ all: $(BUILD_DIR)/$(DEVICE).elf $(BUILD_DIR)/$(DEVICE).txt
 
 $(BUILD_DIR)/$(DEVICE).elf: $(OBJECTS)
 	@echo "链接 $^"
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $(LDFLAGS) $^ -o $@ -lm
 
 $(OBJECTS): | $(BUILD_DIR) $(BUILD_DIR)/driverlib
 
